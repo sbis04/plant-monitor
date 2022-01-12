@@ -163,7 +163,7 @@ class MoistureChart extends StatelessWidget {
               FlSpot(
                 i.toDouble(),
                 double.parse(
-                    (docs[i].get('sensors')['moisture'] as double).toStringAsFixed(2)),
+                    (docs[i].get('sensors')['moisture'] as num).toStringAsFixed(2)),
               ),
           ],
           isCurved: false,
