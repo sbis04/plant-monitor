@@ -40,28 +40,20 @@ class _DashboardPageState extends State<DashboardPage> {
     var docs = await collection.find(
       options: RemoteFindOptions(
         projection: {
-          "temperature": ProjectionValue.INCLUDE,
-          "humidity": ProjectionValue.INCLUDE,
-          "light": ProjectionValue.INCLUDE,
-          "timestamp": ProjectionValue.INCLUDE,
-          "moisture": ProjectionValue.INCLUDE,
+          "sensors": ProjectionValue.INCLUDE
         },
-        // limit: 70,
+        limit: 100,
         sort: {
-          "timestamp": OrderValue.ASCENDING,
+          "timestamp": OrderValue.DESCENDING,
         },
       ),
     );
 
-    // var docs = await collection.find(
-    //   options: RemoteFindOptions(limit: 200, sort: {
-    //     "timestamp": OrderValue.DESCENDING,
-    //   }),
-    // );
+    // print('LIGHT: ${docs[0].get('sensors')['light']}');
 
     setState(() {
       dbCollection = collection;
-      retrievedDocs = docs;
+      retrievedDocs = docs.reversed.toList();
     });
 
     // final stream = collection.watch();
@@ -113,7 +105,7 @@ class _DashboardPageState extends State<DashboardPage> {
     return Scaffold(
       backgroundColor: Palette.blue_gray,
       body: SafeArea(
-        child: dbCollection == null
+        child: dbCollection == null || retrievedDocs == null
             ? Center(child: CircularProgressIndicator())
             : StreamBuilder(
                 stream: dbCollection!.watch(),
@@ -129,7 +121,9 @@ class _DashboardPageState extends State<DashboardPage> {
                   if (snapshot.data != null) {
                     final retrievedDoc = MongoDocument.parse(snapshot.data!);
 
-                    retrievedDocs!.add(retrievedDoc);
+                    // retrievedDocs!.add(retrievedDoc);
+
+                    print(retrievedDocs!.length);
 
                     final data = retrievedDoc.get('sensors');
                     print(data.toString());
