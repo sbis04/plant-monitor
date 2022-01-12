@@ -16,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Palette.blue_gray,
+      statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.light,
     ));
   }
@@ -25,61 +25,91 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Palette.blue_gray,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 16.0,
-            right: 16.0,
-            bottom: 20.0,
+      body: Stack(
+        children: [
+          Opacity(
+            opacity: 0.2,
+            child: SizedBox(
+              height: double.maxFinite,
+              child: Image.asset(
+                'assets/plant_background.jpeg',
+                fit: BoxFit.fitHeight,
+              ),
+            ),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Row(),
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'PlantTinker',
-                      style: TextStyle(
-                        color: Palette.neon_green,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 40,
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 16.0,
+                right: 16.0,
+                bottom: 20.0,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Row(),
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Plant Monitor',
+                          style: TextStyle(
+                            fontFamily: 'DancingScript',
+                            color: Palette.neon_green,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 55,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: double.maxFinite,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Palette.green_accent),
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => DashboardPage(),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: Text(
+                          'Get data',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 24.0,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  // FutureBuilder(
+                  //   future: Authentication.initializeFirebase(context: context),
+                  //   builder: (context, snapshot) {
+                  //     if (snapshot.hasError) {
+                  //       return Text('Error initializing Firebase');
+                  //     } else if (snapshot.connectionState == ConnectionState.done) {
+                  //       return GoogleSignInButton();
+                  //     }
+                  //     return CircularProgressIndicator(
+                  //       valueColor: AlwaysStoppedAnimation<Color>(
+                  //         Palette.neon_green,
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
+                ],
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => DashboardPage(),
-                    ),
-                  );
-                },
-                child: Text('Dashboard'),
-              ),
-              // FutureBuilder(
-              //   future: Authentication.initializeFirebase(context: context),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.hasError) {
-              //       return Text('Error initializing Firebase');
-              //     } else if (snapshot.connectionState == ConnectionState.done) {
-              //       return GoogleSignInButton();
-              //     }
-              //     return CircularProgressIndicator(
-              //       valueColor: AlwaysStoppedAnimation<Color>(
-              //         Palette.neon_green,
-              //       ),
-              //     );
-              //   },
-              // ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
