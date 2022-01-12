@@ -1,0 +1,36 @@
+name: flutter_mongodb_realm
+description: Unofficial plugin for using services of the serverless platform MongoDB Realm
+version: 2.0.1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_mongo_stitch_platform_interface: ^2.0.0-nullsafety.0
+  flutter_mongo_stitch_web: ^1.0.0-nullsafety.0
+
+  universal_html: ^2.0.8
+  bson: ^1.0.3
+  extension: ^0.2.0
+  streams_channel2: ^1.0.0
+
+  meta: ^1.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.example.flutter_mongo_stitch
+        pluginClass: FlutterMongoStitchPlugin
+      ios:
+        pluginClass: FlutterMongoStitchPlugin
+      web:
+        default_package: flutter_mongo_stitch_web
